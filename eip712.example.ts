@@ -24,6 +24,7 @@ const value = {
     originator: OMRI Give this data,
     beneficiary: OMRI Give this data,
     symbol: OMRI Give this data,
+    amount: OMRI Give this data,
     expireAt: OMRI Give this data,
 };
 
