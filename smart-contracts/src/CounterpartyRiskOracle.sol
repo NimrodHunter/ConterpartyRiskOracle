@@ -9,10 +9,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract CounterpartyRiskOracle is ICounterpartyRiskOracle, Ownable {
 
     // Events
-    event CounterpartyRisk(address indexed _customerVASP, address indexed _originator, address indexed _beneficiary, uint256 _value, bytes _data, bool _rules);
+    event CounterpartyRiskAttestation(address indexed _customerVASP, address indexed _originator, address indexed _beneficiary, string _symbol, uint256 _amount);
 
     address private signer;
-    uint256 private nonce;
 
     // Notabene txHash to source to verified
     mapping (bytes32 =>  bytes) private signatureOfHash; 
@@ -21,7 +20,7 @@ contract CounterpartyRiskOracle is ICounterpartyRiskOracle, Ownable {
     bytes32 private immutable eip712DomainHash;
 
     // Type Hash
-    bytes32 private constant CRO_TYPEHASH = keccak256("Counter Party Risk Oracle(address customerVASP, bytes32 txHash, address originator, address beneficiary, uint256 value, bytes data, uint256 deadline, bool rules)");
+    bytes32 private constant CRA_TYPEHASH = keccak256("Counter Party Risk Attestation(address VASPAddress, address originator, address beneficiary, string symbol, uint256 amount, uint256 expireAt)");
 
     constructor(address _signer) {
         require(_signer != address(0), "CRO: Please use a non 0 address");
@@ -39,14 +38,13 @@ contract CounterpartyRiskOracle is ICounterpartyRiskOracle, Ownable {
     
     // External Functions
 
-    function verifyCounterpartyRisk(CRO memory _msg, bytes calldata _sig) external {
-        require(_msg.deadline > block.timestamp, "CRO: Deadline expired");
-        require(_msg.customerVASP == _msg.originator || _msg.customerVASP == _msg.beneficiary, "CRO: Invalid customer VASP");
+    function verifyCounterpartyRisk(CRA memory _msg, bytes calldata _sig) external {
+        require(_msg.expireAt > block.timestamp, "CRO: Deadline expired");
+        require(_msg.VASPAddress == _msg.originator || _msg.VASPAddress == _msg.beneficiary, "CRO: Invalid customer VASP");
         address vasp;
-        _msg.customerVASP == _msg.originator ? vasp = _msg.originator : vasp = _msg.beneficiary;
+        _msg.VASPAddress == _msg.originator ? vasp = _msg.originator : vasp = _msg.beneficiary;
         require(vasp == msg.sender, "CRO: Invalid sender");
-        nonce = nonce + 1;
-        bytes32 hashedStruct = _getStructHash(_msg, nonce);
+        bytes32 hashedStruct = _getStructHash(_msg);
         require(signatureOfHash[hashedStruct].length == 0, "CRO: Already verified by the customer VASP");    
         (bytes32 r, bytes32 s, uint8 v) = _splitSignature(_sig);
         address signer_ = _verifyMessage(eip712DomainHash, hashedStruct, v, r, s);
@@ -54,7 +52,7 @@ contract CounterpartyRiskOracle is ICounterpartyRiskOracle, Ownable {
         require(signer_ != address(0), "ECDSA: Invalid signature");  
 
         signatureOfHash[hashedStruct] = _sig;
-        emit CounterpartyRisk(_msg.customerVASP, _msg.originator, _msg.beneficiary, _msg.value, _msg.data, _msg.rules);
+        emit CounterpartyRiskAttestation(_msg.VASPAddress, _msg.originator, _msg.beneficiary, _msg.symbol, _msg.amount);
     }
 
     // Setters
@@ -78,17 +76,15 @@ contract CounterpartyRiskOracle is ICounterpartyRiskOracle, Ownable {
 
     // Internal Functions
 
-    function _getStructHash(CRO memory _msg, uint256 _nonce) internal pure returns (bytes32) {
+    function _getStructHash(CRA memory _msg) internal pure returns (bytes32) {
         return keccak256(abi.encode(
-            CRO_TYPEHASH,
-            _nonce,
-            _msg.customerVASP,
+            CRA_TYPEHASH,
+            _msg.VASPAddress,
             _msg.originator,
             _msg.beneficiary,
-            _msg.value,
-            _msg.data,
-            _msg.deadline,
-            _msg.rules
+            _msg.symbol,
+            _msg.amount,
+            _msg.expireAt
         ));
     }
 

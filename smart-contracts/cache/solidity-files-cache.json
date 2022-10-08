@@ -254,6 +254,129 @@
         }
       }
     },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1665201858436,
+      "contentHash": "92cc1aad41bdb18ca20f6e03f461de7d",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "ERC20": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "ERC20.sol/ERC20.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1665201858436,
+      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "IERC20.sol/IERC20.json"
+        }
+      }
+    },
+    "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1665201858437,
+      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20Metadata": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "IERC20Metadata.sol/IERC20Metadata.json"
+        }
+      }
+    },
     "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
       "lastModificationDate": 1665201858440,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
@@ -294,8 +417,8 @@
       }
     },
     "script/CounterpartyRiskOracle.s.sol": {
-      "lastModificationDate": 1665201919330,
-      "contentHash": "6a41d81bd51e4ad0d333db8460602b2b",
+      "lastModificationDate": 1665208595857,
+      "contentHash": "5a70abc21ac2c81fa1249758d3bc10de",
       "sourceName": "script/CounterpartyRiskOracle.s.sol",
       "solcConfig": {
         "settings": {
@@ -331,16 +454,61 @@
         "lib/forge-std/src/console.sol",
         "lib/forge-std/src/console2.sol"
       ],
-      "versionRequirement": "^0.8.13",
+      "versionRequirement": "^0.8.17",
       "artifacts": {
         "CounterpartyRiskOracleScript": {
           "0.8.17+commit.8df45f5f.Darwin.appleclang": "CounterpartyRiskOracle.s.sol/CounterpartyRiskOracleScript.json"
         }
       }
     },
+    "script/MockUSD.s.sol": {
+      "lastModificationDate": 1665208589306,
+      "contentHash": "a859d43905572e2d5356099c79045a8c",
+      "sourceName": "script/MockUSD.s.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol"
+      ],
+      "versionRequirement": "^0.8.17",
+      "artifacts": {
+        "MockUSDScript": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "MockUSD.s.sol/MockUSDScript.json"
+        }
+      }
+    },
     "src/CounterpartyRiskOracle.sol": {
-      "lastModificationDate": 1665204197298,
-      "contentHash": "4cbf5e5e694134d7b1af079b79d2fc56",
+      "lastModificationDate": 1665211517207,
+      "contentHash": "bd5539773e10cb3712df9408907cc9b3",
       "sourceName": "src/CounterpartyRiskOracle.sol",
       "solcConfig": {
         "settings": {
@@ -382,8 +550,8 @@
       }
     },
     "src/ICounterpartyRiskOracle.sol": {
-      "lastModificationDate": 1665203665083,
-      "contentHash": "b258b55a4ec11ba9ff7786929dbfb378",
+      "lastModificationDate": 1665210901454,
+      "contentHash": "b3d4bfc4510451a5992fe80d83951bb6",
       "sourceName": "src/ICounterpartyRiskOracle.sol",
       "solcConfig": {
         "settings": {
@@ -417,6 +585,51 @@
       "artifacts": {
         "ICounterpartyRiskOracle": {
           "0.8.17+commit.8df45f5f.Darwin.appleclang": "ICounterpartyRiskOracle.sol/ICounterpartyRiskOracle.json"
+        }
+      }
+    },
+    "src/MockUSD.sol": {
+      "lastModificationDate": 1665208582044,
+      "contentHash": "80961cff7fbf53fbaf8111470b21a17d",
+      "sourceName": "src/MockUSD.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "^0.8.17",
+      "artifacts": {
+        "MockUSD": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "MockUSD.sol/MockUSD.json"
         }
       }
     },

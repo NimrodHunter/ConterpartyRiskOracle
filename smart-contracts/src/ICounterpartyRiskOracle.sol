@@ -5,23 +5,21 @@ pragma solidity ^0.8.17;
 
 interface ICounterpartyRiskOracle {
 
-    struct croParams {
-        bool rules;
-        uint256 deadline;
+    struct craParams {
+        uint256 expireAt;
         bytes signature;
     }
 
-    struct CRO {
-        address customerVASP;
-        bool rules;
+    struct CRA {
+        address VASPAddress;
         address originator;
         address beneficiary;
-        uint256 value;
-        bytes data;
-        uint256 deadline;
+        string symbol;
+        uint256 amount;
+        uint256 expireAt;
     }
 
-    function verifyCounterpartyRisk(CRO calldata msg, bytes calldata sig) external;
+    function verifyCounterpartyRisk(CRA calldata msg, bytes calldata sig) external;
 
     function setSigner(address signer) external;
 
