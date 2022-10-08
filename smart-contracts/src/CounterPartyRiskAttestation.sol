@@ -1,12 +1,12 @@
-// @title CounterPartyRiskOracle
-// @notice Provides functions to verify off chain information about counter party risk in txs
+// @title CounterPartyRiskAttestation
+// @notice Provides functions to verify off chain information about counter party risk
 // @author Anibal Catalan <anibal@notabene.id>
 pragma solidity ^0.8.17;
 
-import "@src/ICounterpartyRiskOracle.sol";
+import "@src/ICounterPartyRiskAttestation.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract CounterpartyRiskOracle is ICounterpartyRiskOracle, Ownable {
+contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
 
     // Events
     event CounterpartyRiskAttestation(address indexed _customerVASP, address indexed _originator, address indexed _beneficiary, string _symbol, uint256 _amount);
@@ -28,7 +28,7 @@ contract CounterpartyRiskOracle is ICounterpartyRiskOracle, Ownable {
         eip712DomainHash = keccak256(
             abi.encode(
                 keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
-                keccak256(bytes("Counter Party Risk Oracle")), // ERC-721 Name
+                keccak256(bytes("Counter Party Risk Attestation")), // ERC-721 Name
                 keccak256(bytes("1")), // Version
                 block.chainid,
                 address(this)

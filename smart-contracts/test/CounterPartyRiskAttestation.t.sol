@@ -3,12 +3,12 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
 import "./SigUtils.sol";
-import "@src/ICounterpartyRiskOracle.sol";
-import "@src/CounterpartyRiskOracle.sol";
+import "@src/ICounterPartyRiskAttestation.sol";
+import "@src/CounterPartyRiskAttestation.sol";
 
-contract CounterpartyRiskOracleTest is Test {
+contract CounterPartyRiskAttestationTest is Test {
     SigUtils internal sigUtils;
-    ICounterpartyRiskOracle internal cra;
+    ICounterPartyRiskAttestation internal cra;
 
     uint256 internal signerPrivateKey;
     uint256 internal originatorPrivateKey;
@@ -22,7 +22,7 @@ contract CounterpartyRiskOracleTest is Test {
         signerPrivateKey = 0xA11CF;
         signer = vm.addr(signerPrivateKey);
 
-        cra = new CounterpartyRiskOracle(signer);
+        cra = new CounterPartyRiskAttestation(signer);
         sigUtils = new SigUtils(cra.getDomainHash());
 
         originatorPrivateKey = 0xF13AB;
@@ -38,7 +38,7 @@ contract CounterpartyRiskOracleTest is Test {
 
     function testverifyCounterpartyRiskTo() public {
         
-       CounterpartyRiskOracle.CRA memory craMsg = ICounterpartyRiskOracle.CRA({
+       CounterPartyRiskAttestation.CRA memory craMsg = ICounterPartyRiskAttestation.CRA({
             VASPAddress: address(this),
             originator: originator,
             beneficiary: address(this),

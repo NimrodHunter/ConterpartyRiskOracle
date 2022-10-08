@@ -24,7 +24,7 @@ contract SigUtils {
     // computes the hash of a counter party risk oracle
     function getStructHash(CRA memory _msg)
         public
-        view
+        pure
         returns (bytes32)
     {
         return

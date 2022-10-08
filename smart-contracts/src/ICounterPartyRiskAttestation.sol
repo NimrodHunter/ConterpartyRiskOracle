@@ -1,9 +1,9 @@
-// @title Interface CounterPartyRiskOracle
-// @notice Provides functions interface to verify off chain information about counter party risk in txs
+// @title Interface CounterPartyRiskAttestation
+// @notice Provides functions interface to verify off chain information about counter party risk
 // @author Anibal Catalan <anibal@notabene.id>
 pragma solidity ^0.8.17;
 
-interface ICounterpartyRiskOracle {
+interface ICounterPartyRiskAttestation {
 
     struct craParams {
         uint256 expireAt;

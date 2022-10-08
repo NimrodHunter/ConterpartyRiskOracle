@@ -600,10 +600,10 @@
         }
       }
     },
-    "src/CounterpartyRiskOracle.sol": {
-      "lastModificationDate": 1665211517207,
-      "contentHash": "bd5539773e10cb3712df9408907cc9b3",
-      "sourceName": "src/CounterpartyRiskOracle.sol",
+    "src/CounterPartyRiskAttestation.sol": {
+      "lastModificationDate": 1665214407496,
+      "contentHash": "5bef0120d02b3c2ae3ada8a16dfd0fbc",
+      "sourceName": "src/CounterPartyRiskAttestation.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -634,19 +634,19 @@
       "imports": [
         "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
-        "src/ICounterpartyRiskOracle.sol"
+        "src/ICounterPartyRiskAttestation.sol"
       ],
       "versionRequirement": "^0.8.17",
       "artifacts": {
-        "CounterpartyRiskOracle": {
-          "0.8.17+commit.8df45f5f.Darwin.appleclang": "CounterpartyRiskOracle.sol/CounterpartyRiskOracle.json"
+        "CounterPartyRiskAttestation": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "CounterPartyRiskAttestation.sol/CounterPartyRiskAttestation.json"
         }
       }
     },
-    "src/ICounterpartyRiskOracle.sol": {
-      "lastModificationDate": 1665210901454,
-      "contentHash": "b3d4bfc4510451a5992fe80d83951bb6",
-      "sourceName": "src/ICounterpartyRiskOracle.sol",
+    "src/ICounterPartyRiskAttestation.sol": {
+      "lastModificationDate": 1665214256647,
+      "contentHash": "90bc919cf219c374e11f0fe64ddf7e0b",
+      "sourceName": "src/ICounterPartyRiskAttestation.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -677,8 +677,8 @@
       "imports": [],
       "versionRequirement": "^0.8.17",
       "artifacts": {
-        "ICounterpartyRiskOracle": {
-          "0.8.17+commit.8df45f5f.Darwin.appleclang": "ICounterpartyRiskOracle.sol/ICounterpartyRiskOracle.json"
+        "ICounterPartyRiskAttestation": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "ICounterPartyRiskAttestation.sol/ICounterPartyRiskAttestation.json"
         }
       }
     },
@@ -769,10 +769,54 @@
         }
       }
     },
-    "test/CounterpartyRiskOracle.t.sol": {
-      "lastModificationDate": 1665213486909,
-      "contentHash": "f509f0b91a4f72706ec8a7315f55c744",
-      "sourceName": "test/CounterpartyRiskOracle.t.sol",
+    "src/VerifiedStakingRewards.sol": {
+      "lastModificationDate": 1665216979497,
+      "contentHash": "15dc35342d20db2d3f03f4dc5d8469d8",
+      "sourceName": "src/VerifiedStakingRewards.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "src/ICounterPartyRiskAttestation.sol"
+      ],
+      "versionRequirement": "^0.8.17",
+      "artifacts": {
+        "IERC20": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "VerifiedStakingRewards.sol/IERC20.json"
+        },
+        "VerifiedStakingRewards": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "VerifiedStakingRewards.sol/VerifiedStakingRewards.json"
+        }
+      }
+    },
+    "test/CounterPartyRiskAttestation.t.sol": {
+      "lastModificationDate": 1665214490995,
+      "contentHash": "fe8cabde521a5392d8051d316c0c402e",
+      "sourceName": "test/CounterPartyRiskAttestation.t.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -810,20 +854,20 @@
         "lib/forge-std/src/console2.sol",
         "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
-        "src/CounterpartyRiskOracle.sol",
-        "src/ICounterpartyRiskOracle.sol",
+        "src/CounterPartyRiskAttestation.sol",
+        "src/ICounterPartyRiskAttestation.sol",
         "test/SigUtils.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
-        "CounterpartyRiskOracleTest": {
-          "0.8.17+commit.8df45f5f.Darwin.appleclang": "CounterpartyRiskOracle.t.sol/CounterpartyRiskOracleTest.json"
+        "CounterPartyRiskAttestationTest": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "CounterPartyRiskAttestation.t.sol/CounterPartyRiskAttestationTest.json"
         }
       }
     },
     "test/SigUtils.sol": {
-      "lastModificationDate": 1665213542348,
-      "contentHash": "08002ae317ce74303592b3176a6371d6",
+      "lastModificationDate": 1665214539900,
+      "contentHash": "f108eeadfcc078a09351d544294ba6e2",
       "sourceName": "test/SigUtils.sol",
       "solcConfig": {
         "settings": {

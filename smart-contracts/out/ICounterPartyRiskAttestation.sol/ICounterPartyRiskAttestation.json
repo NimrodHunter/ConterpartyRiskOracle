@@ -1,0 +1,917 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getDomainHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getSigner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_sigHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "hashSignature",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "signer",
+          "type": "address"
+        }
+      ],
+      "name": "setSigner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "VASPAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "originator",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "expireAt",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ICounterPartyRiskAttestation.CRA",
+          "name": "msg",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "sig",
+          "type": "bytes"
+        }
+      ],
+      "name": "verifyCounterpartyRisk",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "getDomainHash()": "83ebb771",
+    "getSigner()": "7ac3c02f",
+    "hashSignature(bytes32)": "39d2b9f6",
+    "setSigner(address)": "6c19e783",
+    "verifyCounterpartyRisk((address,address,address,string,uint256,uint256),bytes)": "1d23ead1"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getDomainHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSigner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"_sigHash\",\"type\":\"bytes32\"}],\"name\":\"hashSignature\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"signer\",\"type\":\"address\"}],\"name\":\"setSigner\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"VASPAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"originator\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"beneficiary\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"expireAt\",\"type\":\"uint256\"}],\"internalType\":\"struct ICounterPartyRiskAttestation.CRA\",\"name\":\"msg\",\"type\":\"tuple\"},{\"internalType\":\"bytes\",\"name\":\"sig\",\"type\":\"bytes\"}],\"name\":\"verifyCounterpartyRisk\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/ICounterPartyRiskAttestation.sol\":\"ICounterPartyRiskAttestation\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":@src/=src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\"]},\"sources\":{\"src/ICounterPartyRiskAttestation.sol\":{\"keccak256\":\"0x46be3256a3277b230f69de510aa4de020c475c42157e77a3964123f460bf12a4\",\"urls\":[\"bzz-raw://4c8c6ef2270b446aeae06b61bc16883f0cb8ce15500d18a8c707f394cb3906ab\",\"dweb:/ipfs/QmaENqfwyHCYGTfjg7n6zq1UMx5wkzW1FjwBNmLJfC9XKn\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.17+commit.8df45f5f"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getDomainHash",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getSigner",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "_sigHash",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "hashSignature",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "",
+              "type": "bytes"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "signer",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setSigner"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "struct ICounterPartyRiskAttestation.CRA",
+              "name": "msg",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "VASPAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "originator",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "beneficiary",
+                  "type": "address"
+                },
+                {
+                  "internalType": "string",
+                  "name": "symbol",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "expireAt",
+                  "type": "uint256"
+                }
+              ]
+            },
+            {
+              "internalType": "bytes",
+              "name": "sig",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "verifyCounterpartyRisk"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@openzeppelin/=lib/openzeppelin-contracts/",
+        ":@src/=src/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/ICounterPartyRiskAttestation.sol": "ICounterPartyRiskAttestation"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/ICounterPartyRiskAttestation.sol": {
+        "keccak256": "0x46be3256a3277b230f69de510aa4de020c475c42157e77a3964123f460bf12a4",
+        "urls": [
+          "bzz-raw://4c8c6ef2270b446aeae06b61bc16883f0cb8ce15500d18a8c707f394cb3906ab",
+          "dweb:/ipfs/QmaENqfwyHCYGTfjg7n6zq1UMx5wkzW1FjwBNmLJfC9XKn"
+        ],
+        "license": null
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/ICounterPartyRiskAttestation.sol",
+    "id": 23769,
+    "exportedSymbols": {
+      "ICounterPartyRiskAttestation": [
+        23768
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "192:676:10",
+    "nodes": [
+      {
+        "id": 23719,
+        "nodeType": "PragmaDirective",
+        "src": "192:24:10",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".17"
+        ]
+      },
+      {
+        "id": 23768,
+        "nodeType": "ContractDefinition",
+        "src": "218:650:10",
+        "nodes": [
+          {
+            "id": 23724,
+            "nodeType": "StructDefinition",
+            "src": "264:75:10",
+            "canonicalName": "ICounterPartyRiskAttestation.craParams",
+            "members": [
+              {
+                "constant": false,
+                "id": 23721,
+                "mutability": "mutable",
+                "name": "expireAt",
+                "nameLocation": "299:8:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23724,
+                "src": "291:16:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 23720,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "291:7:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23723,
+                "mutability": "mutable",
+                "name": "signature",
+                "nameLocation": "323:9:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23724,
+                "src": "317:15:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes_storage_ptr",
+                  "typeString": "bytes"
+                },
+                "typeName": {
+                  "id": 23722,
+                  "name": "bytes",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "317:5:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_storage_ptr",
+                    "typeString": "bytes"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "craParams",
+            "nameLocation": "271:9:10",
+            "scope": 23768,
+            "visibility": "public"
+          },
+          {
+            "id": 23737,
+            "nodeType": "StructDefinition",
+            "src": "345:177:10",
+            "canonicalName": "ICounterPartyRiskAttestation.CRA",
+            "members": [
+              {
+                "constant": false,
+                "id": 23726,
+                "mutability": "mutable",
+                "name": "VASPAddress",
+                "nameLocation": "374:11:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23737,
+                "src": "366:19:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 23725,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "366:7:10",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23728,
+                "mutability": "mutable",
+                "name": "originator",
+                "nameLocation": "403:10:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23737,
+                "src": "395:18:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 23727,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "395:7:10",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23730,
+                "mutability": "mutable",
+                "name": "beneficiary",
+                "nameLocation": "431:11:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23737,
+                "src": "423:19:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 23729,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "423:7:10",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23732,
+                "mutability": "mutable",
+                "name": "symbol",
+                "nameLocation": "459:6:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23737,
+                "src": "452:13:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 23731,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "452:6:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23734,
+                "mutability": "mutable",
+                "name": "amount",
+                "nameLocation": "483:6:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23737,
+                "src": "475:14:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 23733,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "475:7:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 23736,
+                "mutability": "mutable",
+                "name": "expireAt",
+                "nameLocation": "507:8:10",
+                "nodeType": "VariableDeclaration",
+                "scope": 23737,
+                "src": "499:16:10",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 23735,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "499:7:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "CRA",
+            "nameLocation": "352:3:10",
+            "scope": 23768,
+            "visibility": "public"
+          },
+          {
+            "id": 23745,
+            "nodeType": "FunctionDefinition",
+            "src": "528:79:10",
+            "functionSelector": "1d23ead1",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "verifyCounterpartyRisk",
+            "nameLocation": "537:22:10",
+            "parameters": {
+              "id": 23743,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23740,
+                  "mutability": "mutable",
+                  "name": "msg",
+                  "nameLocation": "573:3:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23745,
+                  "src": "560:16:10",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CRA_$23737_calldata_ptr",
+                    "typeString": "struct ICounterPartyRiskAttestation.CRA"
+                  },
+                  "typeName": {
+                    "id": 23739,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 23738,
+                      "name": "CRA",
+                      "nameLocations": [
+                        "560:3:10"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 23737,
+                      "src": "560:3:10"
+                    },
+                    "referencedDeclaration": 23737,
+                    "src": "560:3:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_CRA_$23737_storage_ptr",
+                      "typeString": "struct ICounterPartyRiskAttestation.CRA"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 23742,
+                  "mutability": "mutable",
+                  "name": "sig",
+                  "nameLocation": "593:3:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23745,
+                  "src": "578:18:10",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 23741,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "578:5:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "559:38:10"
+            },
+            "returnParameters": {
+              "id": 23744,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "606:0:10"
+            },
+            "scope": 23768,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 23750,
+            "nodeType": "FunctionDefinition",
+            "src": "613:44:10",
+            "functionSelector": "6c19e783",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setSigner",
+            "nameLocation": "622:9:10",
+            "parameters": {
+              "id": 23748,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23747,
+                  "mutability": "mutable",
+                  "name": "signer",
+                  "nameLocation": "640:6:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23750,
+                  "src": "632:14:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 23746,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "632:7:10",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "631:16:10"
+            },
+            "returnParameters": {
+              "id": 23749,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "656:0:10"
+            },
+            "scope": 23768,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 23755,
+            "nodeType": "FunctionDefinition",
+            "src": "663:53:10",
+            "functionSelector": "7ac3c02f",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getSigner",
+            "nameLocation": "672:9:10",
+            "parameters": {
+              "id": 23751,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "681:2:10"
+            },
+            "returnParameters": {
+              "id": 23754,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23753,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23755,
+                  "src": "707:7:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 23752,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "707:7:10",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "706:9:10"
+            },
+            "scope": 23768,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 23762,
+            "nodeType": "FunctionDefinition",
+            "src": "722:80:10",
+            "functionSelector": "39d2b9f6",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hashSignature",
+            "nameLocation": "731:13:10",
+            "parameters": {
+              "id": 23758,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23757,
+                  "mutability": "mutable",
+                  "name": "_sigHash",
+                  "nameLocation": "753:8:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23762,
+                  "src": "745:16:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 23756,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "745:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "744:18:10"
+            },
+            "returnParameters": {
+              "id": 23761,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23760,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23762,
+                  "src": "786:14:10",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 23759,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "786:5:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "785:16:10"
+            },
+            "scope": 23768,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 23767,
+            "nodeType": "FunctionDefinition",
+            "src": "808:57:10",
+            "functionSelector": "83ebb771",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getDomainHash",
+            "nameLocation": "817:13:10",
+            "parameters": {
+              "id": 23763,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "830:2:10"
+            },
+            "returnParameters": {
+              "id": 23766,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23765,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23767,
+                  "src": "856:7:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 23764,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "856:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "855:9:10"
+            },
+            "scope": 23768,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ICounterPartyRiskAttestation",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          23768
+        ],
+        "name": "ICounterPartyRiskAttestation",
+        "nameLocation": "228:28:10",
+        "scope": 23769,
+        "usedErrors": []
+      }
+    ]
+  },
+  "id": 10
+}
