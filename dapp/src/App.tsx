@@ -8,6 +8,10 @@ import { BigNumber, ethers } from "ethers";
 import { WETHContract } from "./contracts/wethContract";
 import { musdContract } from "./contracts/musdContract";
 import { stakingContract } from "./contracts/stakingContract";
+import StakeView from "./views/StakeView";
+import { Box, Button } from "@chakra-ui/react";
+import Header from "./components/Header";
+import { runRules } from "./notabene";
 
 const clientId =
 	"BHzLV_G8M2v-usQhJfTTKcDBR7RENAkYLn9D2VqX14Fn2_s2iSdjLFItKs5-BMOjtzwCilHGdcFTkqz2A6TRP_I"; // get from https://dashboard.web3auth.io
@@ -17,6 +21,14 @@ function App() {
 	const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
 		null
 	);
+	const [address, setAddress] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (provider) {
+			refreshAddress();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [provider]);
 
 	useEffect(() => {
 		const init = async () => {
@@ -57,8 +69,9 @@ function App() {
 			return;
 		}
 		const web3authProvider = await web3auth.connect();
-
 		setProvider(web3authProvider);
+		const fetchedAddress = await getAccounts();
+		setAddress(fetchedAddress);
 	};
 
 	const getUserInfo = async () => {
@@ -77,6 +90,11 @@ function App() {
 		}
 		await web3auth.logout();
 		setProvider(null);
+	};
+
+	const refreshAddress = async () => {
+		const fetchedAddress = await getAccounts();
+		setAddress(fetchedAddress);
 	};
 
 	const wrappedETHBalance = async () => {
@@ -141,6 +159,62 @@ function App() {
 			console.log("provider not initialized yet");
 			return;
 		}
+
+		const wallet = new ethers.Wallet(
+			"05c17cd5268b54bb5cd896f7ec4e80ec5d9197aefa842d0b0ee75de92e162340"
+		);
+
+		// All properties on a domain are optional
+		const domain = {
+			name: "Counter Party Risk Attestation",
+			version: "1",
+			chainId: 5,
+			verifyingContract: "0x4c1c63F0F8eBBa87c4aAef8f1fffB4CD59edC6c7",
+		};
+
+		// The named list of all type definitions
+		const types = {
+			CRA: [
+				{ name: "VASPAddress", type: "address" },
+				{ name: "originator", type: "address" },
+				{ name: "beneficiary", type: "address" },
+				{ name: "symbol", type: "string" },
+				{ name: "amount", type: "uint256" },
+				{ name: "expireAt", type: "uint256" },
+			],
+		};
+
+		// The data to sign
+		const value = {
+			VASPAddress: stakingContract.address,
+			originator: address,
+			beneficiary: stakingContract.address,
+			symbol: "ETH",
+			amount: 10000,
+			expireAt: 1666119768,
+		};
+
+		console.log(value);
+
+		const signature = await wallet._signTypedData(domain, types, value);
+		console.log(signature);
+
+		// '0x463b9c9971d1a144507d2e905f4e98becd159139421a4bb8d3c9c2ed04eb401057dd0698d504fd6ca48829a3c8a7a98c1c961eae617096cb54264bbdd082e13d1c'
+
+		// const rulesResult = await runRules({
+		// 	vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
+		// 	originatorAddress: address as string,
+		// 	beneficiaryAddress: stakingContract.address,
+		// 	transactionAsset: "ETH",
+		// 	transactionAmount: "10000",
+		// 	direction: "outgoing",
+		// });
+
+		// if ((rulesResult as any).actionRule === "REJECT") {
+		// 	alert("cannot stake");
+		// 	return;
+		// }
+
 		const ethersProvider = new ethers.providers.Web3Provider(provider);
 		const signer = ethersProvider.getSigner();
 		const wethContractCurrent = new ethers.Contract(
@@ -157,8 +231,22 @@ function App() {
 			stakingContract.address,
 			BigNumber.from(1000000)
 		);
+		console.log(tx);
+
 		await tx.wait();
-		const tx2 = await stakingContractCurrent.stake(BigNumber.from(1000000));
+
+		const attestation = {
+			signature,
+			expireAt: 1666119768,
+		};
+		console.log(attestation);
+
+		const tx2 = await stakingContractCurrent.stake(
+			BigNumber.from(1000000),
+			attestation
+		);
+		console.log(tx2);
+
 		await tx2.wait();
 		alert("Staked 1000000 WETH");
 	};
@@ -196,7 +284,7 @@ function App() {
 		}
 		const rpc = new RPC(provider);
 		const address = await rpc.getAccounts();
-		console.log(address);
+		return address;
 	};
 
 	const getBalance = async () => {
@@ -241,7 +329,7 @@ function App() {
 	};
 	const loggedInView = (
 		<>
-			<button onClick={getUserInfo} className="card">
+			{/* <button onClick={getUserInfo} className="card">
 				Get User Info
 			</button>
 			<button onClick={getChainId} className="card">
@@ -276,44 +364,29 @@ function App() {
 			</button>
 			<button onClick={getPrivateKey} className="card">
 				Get Private Key
-			</button>
-			<button onClick={logout} className="card">
-				Log Out
-			</button>
-
-			<div id="console" style={{ whiteSpace: "pre-line" }}>
-				<p style={{ whiteSpace: "pre-line" }}></p>
-			</div>
+			</button> */}
+			<Header address={address} onLogout={logout} />
+			<Box height="100px" />
+			<StakeView onStake={stake} />
 		</>
 	);
 
 	const unloggedInView = (
-		<button onClick={login} className="card">
+		<Button onClick={login} className="card">
 			Login
-		</button>
+		</Button>
 	);
 
 	return (
-		<div className="container">
-			<h1 className="title">
-				<a target="_blank" href="http://web3auth.io/" rel="noreferrer">
-					Web3Auth
-				</a>
-				& ReactJS Example
-			</h1>
-
-			<div className="grid">{provider ? loggedInView : unloggedInView}</div>
-
-			<footer className="footer">
-				<a
-					href="https://github.com/Web3Auth/Web3Auth/tree/master/examples/react-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Source code
-				</a>
-			</footer>
-		</div>
+		<Box
+			width="100%"
+			display="flex"
+			flexDirection="column"
+			justifyContent="center"
+			alignItems="center"
+		>
+			{provider ? loggedInView : unloggedInView}
+		</Box>
 	);
 }
 

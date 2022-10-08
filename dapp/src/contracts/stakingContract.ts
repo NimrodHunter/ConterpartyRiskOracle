@@ -1,8 +1,9 @@
-import abi from './stakingContractAbi.json';
+import abi from "./stakingContractAbi.json";
 
-export const stakingContractAddress = '0x821813FA12720a9722B8bEEbC8F3BB65eEc037e5';
+export const stakingContractAddress =
+	"0x9A34E3D9908f17E62bC4dD1D21cf7cc04aa2DfAE";
 
 export const stakingContract = {
-    address: stakingContractAddress,
-    abi,
-  }
+	address: stakingContractAddress,
+	abi,
+};
