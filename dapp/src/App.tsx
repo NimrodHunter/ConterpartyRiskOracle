@@ -27,6 +27,7 @@ function App() {
 	// const [rewards, setRewards] = useState();
 	const [musdBalance, setMusdBalance] = useState();
 	const [address, setAddress] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState<string | undefined>();
 
 	useEffect(() => {
 		if (provider) {
@@ -170,6 +171,8 @@ function App() {
 			return;
 		}
 
+		setIsLoading("staking");
+
 		const rulesResult = await runRules({
 			vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
 			originatorAddress: address as string,
@@ -275,6 +278,8 @@ function App() {
 
 		// await tx2.wait();
 		// alert("Staked 1000000 WETH");
+
+		setIsLoading(undefined);
 	};
 
 	const unstake = async () => {
@@ -282,6 +287,8 @@ function App() {
 			console.log("provider not initialized yet");
 			return;
 		}
+
+		setIsLoading("unstaking");
 		const ethersProvider = new ethers.providers.Web3Provider(provider);
 		const signer = ethersProvider.getSigner();
 		const stakingContractCurrent = new ethers.Contract(
@@ -292,6 +299,7 @@ function App() {
 		const tx = await stakingContractCurrent.withdraw(BigNumber.from(1000000));
 		await tx.wait();
 		alert("Un-staked 1000000 WETH");
+		setIsLoading(undefined);
 	};
 
 	const getChainId = async () => {
@@ -358,6 +366,7 @@ function App() {
 			<Header address={address} onLogout={logout} />
 			<Box height="100px" />
 			<StakeView
+				isLoading={isLoading}
 				amountStoked={amountStoked}
 				wethBalance={wethBalance}
 				onStake={stake}

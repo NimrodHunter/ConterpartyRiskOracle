@@ -25,6 +25,9 @@ export default function Amount({
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let value = e.target.value;
+		if (value === null || !value) {
+			value = "0";
+		}
 		setDisplayValue(value);
 		onChange(parseUnits(value, "ether").toString());
 	};
@@ -55,17 +58,13 @@ export default function Amount({
 					</Text>
 				</Box>
 				<Box display="flex" flexDirection="row" justifyContent="flex-end">
-					<Text
-						paddingRight="8px"
-						fontSize="2md"
-						fontWeight="bold"
-						textAlign="right"
-					>
+					<Text paddingRight="8px" fontSize="smaller" textAlign="right">
 						Balance: {formatEther(BigNumber.from(max))}
 					</Text>
 					<Text
 						cursor="pointer"
-						fontSize="2sm"
+						fontSize="sm"
+						fontWeight="bold"
 						textAlign="right"
 						onClick={setMax}
 					>

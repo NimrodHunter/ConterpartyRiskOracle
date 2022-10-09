@@ -6,13 +6,17 @@ import Amount from "../components/Amount";
 export default function StakeView({
 	onStake,
 	wethBalance,
+	isLoading,
 	amountStoked,
 }: {
 	onStake: (amount: string) => void;
 	wethBalance?: string;
 	amountStoked?: string;
+	isLoading?: undefined | string;
 }) {
 	const [amount, setAmount] = React.useState("0");
+
+	console.log(isLoading, "isLoading");
 
 	const handleAmount = (val: string) => {
 		setAmount(val);
@@ -21,6 +25,8 @@ export default function StakeView({
 	const handleStake = () => {
 		onStake(amount);
 	};
+
+	const shouldDisableButtons = amount === "0";
 
 	return (
 		<>
@@ -36,9 +42,27 @@ export default function StakeView({
 					Stake
 				</Text>
 				<Amount max={wethBalance} onChange={handleAmount} />
-				<Button onClick={handleStake}>STAKE</Button>
-				<Button onClick={() => {}}>UNSTAKE</Button>
-				<Button onClick={() => {}}>GET REWARDS</Button>
+				<Button
+					isLoading={isLoading === "staking"}
+					isDisabled={shouldDisableButtons}
+					onClick={handleStake}
+				>
+					STAKE
+				</Button>
+				<Button
+					isLoading={isLoading === "unstaking"}
+					isDisabled={shouldDisableButtons}
+					onClick={() => {}}
+				>
+					UNSTAKE
+				</Button>
+				<Button
+					isLoading={isLoading === "getreward"}
+					isDisabled={shouldDisableButtons}
+					onClick={() => {}}
+				>
+					GET REWARDS
+				</Button>
 			</Container>
 		</>
 	);

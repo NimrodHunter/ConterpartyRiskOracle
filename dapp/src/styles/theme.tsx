@@ -31,6 +31,9 @@ export const theme = extendTheme({
 				backgroundColor: "primary.500",
 				width: "100%",
 				marginTop: "8px",
+				_disabled: {
+					pointerEvents: "none",
+				},
 			},
 			sizes: {
 				small: {
