@@ -4,7 +4,7 @@ CounterPartyRiskAttestation Contract provide the possibility to verified [eip712
 
 ## Diagram
 
-![alt text](https://github.com/Notabene-id/CounterpartyRiskAttestation/blob/dc279599a4763b7593f42559472204a996568c9a/diagram/Notabene%202.0%20to%20DeFi.png?raw=true)
+![alt text](https://github.com/Notabene-id/CounterpartyRiskAttestation/blob/3c34f0b5ea0134c4c359cf8b3122ea3dff267546/diagram/Notabene%202.0%20to%20DeFi.png?raw=true)
 
 ## Smart Contract Addresses
 
