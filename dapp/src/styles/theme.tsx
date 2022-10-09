@@ -56,18 +56,18 @@ export const theme = extendTheme({
 			},
 			variants: {
 				primary: {
-					bg: "blue.500",
+					bg: "green.500",
 					color: "#fff",
 					_hover: {
-						bg: "blue.400",
+						bg: "green.400",
 					},
 					_active: {
-						bg: "blue.800",
+						bg: "green.500",
 					},
 				},
 				secondary: {
 					bg: "secondary",
-					color: "#fff",
+					color: "#333",
 				},
 				ghost: {
 					bg: "transparent",
@@ -83,7 +83,7 @@ export const theme = extendTheme({
 					border: "1px solid",
 					borderColor: "secondary",
 					_hover: {
-						color: "#fff",
+						color: "#333",
 						bg: "#BB1415",
 					},
 				},

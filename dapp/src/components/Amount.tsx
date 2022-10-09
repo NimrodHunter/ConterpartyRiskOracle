@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Container, Input, Text } from "@chakra-ui/react";
-
+import { formatEther, parseUnits } from "ethers/lib/utils";
+import { BigNumber } from "ethers";
 interface AmountProps {
 	amount?: string;
 	onChange?: (amount: string) => void;
@@ -9,20 +10,23 @@ interface AmountProps {
 }
 
 export default function Amount({
-	amount = "0.0",
-	max = "0.65",
+	amount = "3000000004900",
+	max = "30000000000000",
 	symbol = "ETH",
 	onChange = () => {},
 }: AmountProps) {
-	const [value, setValue] = React.useState(amount);
+	const [displayValue, setDisplayValue] = React.useState("0.0");
+
 	const setMax = () => {
-		setValue(Number(max).toFixed(3));
-		onChange(Number(max).toFixed(3));
+		const val = max;
+		setDisplayValue(formatEther(BigNumber.from(val)));
+		onChange(val);
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-		setValue(value);
+		let value = e.target.value;
+		setDisplayValue(value);
+		onChange(parseUnits(value, "ether").toString());
 	};
 
 	return (
@@ -32,7 +36,7 @@ export default function Amount({
 			</Text>
 			<Container
 				borderColor="transparent"
-				backgroundColor="blue.300"
+				backgroundColor="gray.200"
 				padding="8px"
 			>
 				<Box display="flex" flex="row">
@@ -43,7 +47,8 @@ export default function Amount({
 						border="none"
 						type="number"
 						onChange={handleChange}
-						value={value}
+						defaultValue={formatEther(BigNumber.from(0)).toString()}
+						value={displayValue}
 					/>
 					<Text fontSize="2md" fontWeight="bold" textAlign="right">
 						{symbol}
@@ -56,7 +61,7 @@ export default function Amount({
 						fontWeight="bold"
 						textAlign="right"
 					>
-						Balance: {max}
+						Balance: {formatEther(BigNumber.from(max))}
 					</Text>
 					<Text
 						cursor="pointer"

@@ -21,14 +21,14 @@ export default function Header({
 				fontSize="smaller"
 				boxShadow="md"
 				borderRadius="16px"
-				backgroundColor="gray.100"
+				backgroundColor="white"
 				padding="0 8px"
 			>
 				{address}
 			</Text>
 			<Box>
 				<Button
-					backgroundColor="red.300"
+					backgroundColor="red.300 !important"
 					marginTop="0"
 					size="sm"
 					onClick={onLogout}

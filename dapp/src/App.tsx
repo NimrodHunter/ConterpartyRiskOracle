@@ -12,6 +12,7 @@ import StakeView from "./views/StakeView";
 import { Box, Button } from "@chakra-ui/react";
 import Header from "./components/Header";
 import { runRules } from "./notabene";
+import { verifyMessage, verifyTypedData } from "ethers/lib/utils";
 
 const clientId =
 	"BHzLV_G8M2v-usQhJfTTKcDBR7RENAkYLn9D2VqX14Fn2_s2iSdjLFItKs5-BMOjtzwCilHGdcFTkqz2A6TRP_I"; // get from https://dashboard.web3auth.io
@@ -21,11 +22,15 @@ function App() {
 	const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
 		null
 	);
+	const [wethBalance, setWethBalance] = useState();
+	const [amountStoked, setAmountStoked] = useState();
+	// const [rewards, setRewards] = useState();
+	const [musdBalance, setMusdBalance] = useState();
 	const [address, setAddress] = useState<string | null>(null);
 
 	useEffect(() => {
 		if (provider) {
-			refreshAddress();
+			refresh();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [provider]);
@@ -92,9 +97,16 @@ function App() {
 		setProvider(null);
 	};
 
-	const refreshAddress = async () => {
+	const refresh = async () => {
 		const fetchedAddress = await getAccounts();
+		const weth = await wrappedETHBalance();
+		const stoked = await stakedBalance();
+		const musd = await mUSDBalance();
+		// const reward = await rewardsBalance()
 		setAddress(fetchedAddress);
+		setWethBalance(weth);
+		setAmountStoked(stoked);
+		setMusdBalance(musd);
 	};
 
 	const wrappedETHBalance = async () => {
@@ -112,8 +124,8 @@ function App() {
 		);
 		const address = await signer.getAddress();
 
-		const message = (await contract.balanceOf(address)).toString();
-		console.log(message);
+		const amount = (await contract.balanceOf(address)).toString();
+		return amount;
 	};
 
 	const mUSDBalance = async () => {
@@ -131,8 +143,7 @@ function App() {
 		);
 		const address = await signer.getAddress();
 
-		const message = (await contract.balanceOf(address)).toString();
-		console.log(message);
+		return (await contract.balanceOf(address)).toString();
 	};
 
 	const stakedBalance = async () => {
@@ -150,19 +161,36 @@ function App() {
 		);
 		const address = await signer.getAddress();
 
-		const message = (await contract.balanceOf(address)).toString();
-		console.log(message);
+		return (await contract.balanceOf(address)).toString();
 	};
 
-	const stake = async () => {
+	const stake = async (amount: string) => {
 		if (!provider) {
 			console.log("provider not initialized yet");
 			return;
 		}
 
-		const wallet = new ethers.Wallet(
-			"05c17cd5268b54bb5cd896f7ec4e80ec5d9197aefa842d0b0ee75de92e162340"
-		);
+		const rulesResult = await runRules({
+			vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
+			originatorAddress: address as string,
+			beneficiaryAddress: stakingContract.address,
+			transactionAsset: "ETH",
+			transactionAmount: amount,
+			direction: "outgoing",
+		});
+
+		if ((rulesResult as any).actionRule === "REJECT") {
+			alert("cannot stake");
+			return;
+		}
+
+		console.log(rulesResult);
+
+		console.log("staking :", amount);
+
+		// const wallet = new ethers.Wallet(
+		// 	"05c17cd5268b54bb5cd896f7ec4e80ec5d9197aefa842d0b0ee75de92e162340"
+		// );
 
 		// All properties on a domain are optional
 		const domain = {
@@ -190,65 +218,63 @@ function App() {
 			originator: address,
 			beneficiary: stakingContract.address,
 			symbol: "ETH",
-			amount: 10000,
+			amount,
 			expireAt: 1666119768,
 		};
+
+		// const verified = verifyMessage(
+		// 	(rulesResult as any).actionRule,
+		// 	(rulesResult as any).signature
+		// );
+
+		// console.log(verified);
 
 		console.log(value);
-
-		const signature = await wallet._signTypedData(domain, types, value);
-		console.log(signature);
-
-		// '0x463b9c9971d1a144507d2e905f4e98becd159139421a4bb8d3c9c2ed04eb401057dd0698d504fd6ca48829a3c8a7a98c1c961eae617096cb54264bbdd082e13d1c'
-
-		// const rulesResult = await runRules({
-		// 	vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
-		// 	originatorAddress: address as string,
-		// 	beneficiaryAddress: stakingContract.address,
-		// 	transactionAsset: "ETH",
-		// 	transactionAmount: "10000",
-		// 	direction: "outgoing",
-		// });
-
-		// if ((rulesResult as any).actionRule === "REJECT") {
-		// 	alert("cannot stake");
-		// 	return;
-		// }
-
-		const ethersProvider = new ethers.providers.Web3Provider(provider);
-		const signer = ethersProvider.getSigner();
-		const wethContractCurrent = new ethers.Contract(
-			WETHContract.address,
-			WETHContract.abi,
-			signer
+		const verified = verifyTypedData(
+			domain,
+			types,
+			value,
+			(rulesResult as any).signatureTypedData
 		);
-		const stakingContractCurrent = new ethers.Contract(
-			stakingContract.address,
-			stakingContract.abi,
-			signer
-		);
-		const tx = await wethContractCurrent.approve(
-			stakingContract.address,
-			BigNumber.from(1000000)
-		);
-		console.log(tx);
 
-		await tx.wait();
+		console.log(verified);
 
-		const attestation = {
-			signature,
-			expireAt: 1666119768,
-		};
-		console.log(attestation);
+		// const signature = await wallet._signTypedData(domain, types, value);
+		// console.log(signature);
 
-		const tx2 = await stakingContractCurrent.stake(
-			BigNumber.from(1000000),
-			attestation
-		);
-		console.log(tx2);
+		// ("0x463b9c9971d1a144507d2e905f4e98becd159139421a4bb8d3c9c2ed04eb401057dd0698d504fd6ca48829a3c8a7a98c1c961eae617096cb54264bbdd082e13d1c");
 
-		await tx2.wait();
-		alert("Staked 1000000 WETH");
+		// const ethersProvider = new ethers.providers.Web3Provider(provider);
+		// const signer = ethersProvider.getSigner();
+		// const wethContractCurrent = new ethers.Contract(
+		// 	WETHContract.address,
+		// 	WETHContract.abi,
+		// 	signer
+		// );
+		// const stakingContractCurrent = new ethers.Contract(
+		// 	stakingContract.address,
+		// 	stakingContract.abi,
+		// 	signer
+		// );
+		// const tx = await wethContractCurrent.approve(
+		// 	stakingContract.address,
+		// 	amount
+		// );
+		// console.log(tx);
+
+		// await tx.wait();
+
+		// const attestation = {
+		// 	signature: signature,
+		// 	expireAt: 1666119768,
+		// };
+		// console.log(attestation);
+
+		// const tx2 = await stakingContractCurrent.stake(amount, attestation);
+		// console.log(tx2);
+
+		// await tx2.wait();
+		// alert("Staked 1000000 WETH");
 	};
 
 	const unstake = async () => {
@@ -329,60 +355,36 @@ function App() {
 	};
 	const loggedInView = (
 		<>
-			{/* <button onClick={getUserInfo} className="card">
-				Get User Info
-			</button>
-			<button onClick={getChainId} className="card">
-				Get Chain ID
-			</button>
-			<button onClick={getAccounts} className="card">
-				Get Accounts
-			</button>
-			<button onClick={getBalance} className="card">
-				Get Balance
-			</button>
-			<button onClick={sendTransaction} className="card">
-				Send Transaction
-			</button>
-			<button onClick={wrappedETHBalance} className="card">
-				warppedETH Balance
-			</button>
-			<button onClick={stakedBalance} className="card">
-				Staked Balance (WETH)
-			</button>
-			<button onClick={mUSDBalance} className="card">
-				MUSD Balance
-			</button>
-			<button onClick={stake} className="card">
-				Stake
-			</button>
-			<button onClick={unstake} className="card">
-				Unstake
-			</button>
-			<button onClick={signMessage} className="card">
-				Sign Message
-			</button>
-			<button onClick={getPrivateKey} className="card">
-				Get Private Key
-			</button> */}
 			<Header address={address} onLogout={logout} />
 			<Box height="100px" />
-			<StakeView onStake={stake} />
+			<StakeView
+				amountStoked={amountStoked}
+				wethBalance={wethBalance}
+				onStake={stake}
+			/>
 		</>
 	);
 
 	const unloggedInView = (
-		<Button onClick={login} className="card">
-			Login
-		</Button>
+		<Box
+			width="500px"
+			height="100%"
+			display="flex"
+			justifyContent="center"
+			alignItems="center"
+		>
+			<Button onClick={login}>Login</Button>
+		</Box>
 	);
 
 	return (
 		<Box
 			width="100%"
+			height="100vh"
 			display="flex"
 			flexDirection="column"
-			justifyContent="center"
+			justifyContent="flex-start"
+			backgroundColor="gray.100"
 			alignItems="center"
 		>
 			{provider ? loggedInView : unloggedInView}
