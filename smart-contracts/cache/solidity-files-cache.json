@@ -601,8 +601,8 @@
       }
     },
     "src/CounterPartyRiskAttestation.sol": {
-      "lastModificationDate": 1665280153609,
-      "contentHash": "8e71c6b954efc170b4a065b58de97cdc",
+      "lastModificationDate": 1665282318791,
+      "contentHash": "f077a24e54389948e177dd7e55ab70d1",
       "sourceName": "src/CounterPartyRiskAttestation.sol",
       "solcConfig": {
         "settings": {
@@ -814,8 +814,8 @@
       }
     },
     "test/CounterPartyRiskAttestation.t.sol": {
-      "lastModificationDate": 1665277382068,
-      "contentHash": "94ffd68e61effc435f100f4ab76072fd",
+      "lastModificationDate": 1665282211202,
+      "contentHash": "7b076c2d37b5535d8da4b1f5997b2de1",
       "sourceName": "test/CounterPartyRiskAttestation.t.sol",
       "solcConfig": {
         "settings": {
@@ -866,8 +866,8 @@
       }
     },
     "test/SigUtils.sol": {
-      "lastModificationDate": 1665280123831,
-      "contentHash": "3a4532e7806724656f5ae76cadb20bd6",
+      "lastModificationDate": 1665282425419,
+      "contentHash": "8612d861e917b51f59c73ca694951dbb",
       "sourceName": "test/SigUtils.sol",
       "solcConfig": {
         "settings": {

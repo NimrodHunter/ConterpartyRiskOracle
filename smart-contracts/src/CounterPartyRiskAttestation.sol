@@ -8,6 +8,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
 
+    struct EIP712Domain {
+        string  name;
+        string  version;
+        uint256 chainId;
+        address verifyingContract;
+    }
+
     // Events
     event CounterpartyRiskAttestation(address indexed _customerVASP, address indexed _originator, address indexed _beneficiary, string _symbol, uint256 _amount);
 
@@ -20,20 +27,24 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
     bytes32 private immutable eip712DomainHash;
 
     // Type Hash
-    bytes32 private constant CRA_TYPEHASH = keccak256("Counter Party Risk Attestation(address VASPAddress, address originator, address beneficiary, string symbol, uint256 amount, uint256 expireAt)");
+    bytes32 constant CRA_TYPEHASH = keccak256(
+        "CRA(address VASPAddress,address originator,address beneficiary,string symbol,uint256 amount,uint256 expireAt)"
+    );
+
+    // Domain hash
+    bytes32 constant EIP712DOMAIN_TYPEHASH = keccak256(
+        "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
+    );
 
     constructor(address _signer) {
         require(_signer != address(0), "CRA: Please use a non 0 address");
         signer = _signer;
-        eip712DomainHash = keccak256(
-            abi.encode(
-                keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
-                keccak256(bytes("Counter Party Risk Attestation")), // ERC-721 Name
-                keccak256(bytes("1")), // Version
-                block.chainid,
-                address(this)
-            )
-        );
+        eip712DomainHash = _hash(EIP712Domain({
+            name: "Counter Party Risk Attestation",
+            version: '1',
+            chainId: block.chainid,
+            verifyingContract: address(this)
+        }));
     }
     
     // External Functions
@@ -76,12 +87,23 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
 
     // Internal Functions
 
+    function _hash(EIP712Domain memory eip712Domain) internal pure returns (bytes32) {
+        return keccak256(abi.encode(
+            EIP712DOMAIN_TYPEHASH,
+            keccak256(bytes(eip712Domain.name)),
+            keccak256(bytes(eip712Domain.version)),
+            eip712Domain.chainId,
+            eip712Domain.verifyingContract
+        ));
+    }
+
     function _getStructHash(CRA memory _msg) internal pure returns (bytes32) {
         return keccak256(abi.encode(
+            CRA_TYPEHASH,
             _msg.VASPAddress,
             _msg.originator,
             _msg.beneficiary,
-            _msg.symbol,
+            keccak256(bytes(_msg.symbol)),
             _msg.amount,
             _msg.expireAt
         ));
@@ -89,7 +111,7 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
 
     function _verifyMessage(bytes32 _eip712DomainHash, bytes32 _hashedStruct, uint8 _v, bytes32 _r, bytes32 _s) internal pure returns (address) {
         //bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-        bytes memory prefix = "0x1901";
+        bytes memory prefix = "\x19\x01";
         bytes32 prefixedHashMessage = keccak256(abi.encodePacked(prefix, _eip712DomainHash, _hashedStruct));
         address signer_ = ecrecover(prefixedHashMessage, _v, _r, _s);
         return signer_;

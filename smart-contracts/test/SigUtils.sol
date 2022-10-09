@@ -10,7 +10,7 @@ contract SigUtils {
 
     // keccak256("Counter Party Risk Attestation(address VASPAddress, address originator, address beneficiary, string symbol, uint256 amount, uint256 expireAt)");
     bytes32 public constant CRA_TYPEHASH =
-        0x70fa7e976ae7888309b0257837ad3f859742f368c48b27f3117be000a91c5497;
+        0x0437aae69c54cd2466509c2a8ff9665c8db4aeca454a7326b4d054709a5b07ea;
 
     struct CRA {
         address VASPAddress;
@@ -30,10 +30,11 @@ contract SigUtils {
         return
             keccak256(
                 abi.encode(
+                    CRA_TYPEHASH,
                     _msg.VASPAddress,
                     _msg.originator,
                     _msg.beneficiary,
-                    _msg.symbol,
+                    keccak256(bytes(_msg.symbol)),
                     _msg.amount,
                     _msg.expireAt
                 )
@@ -49,7 +50,7 @@ contract SigUtils {
         return
             keccak256(
                 abi.encodePacked(
-                    "0x1901",
+                    "\x19\x01",
                     DOMAIN_SEPARATOR,
                     getStructHash(_msg)
                 )
