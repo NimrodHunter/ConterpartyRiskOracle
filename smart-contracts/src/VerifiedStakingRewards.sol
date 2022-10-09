@@ -57,6 +57,11 @@ contract VerifiedStakingRewards {
         _;
     }
 
+    function setCRA(address _cra) public {
+        cra = ICounterPartyRiskAttestation(_cra);
+    }
+
+
     function lastTimeRewardApplicable() public view returns (uint) {
         return _min(finishAt, block.timestamp);
     }

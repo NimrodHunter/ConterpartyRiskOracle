@@ -23,7 +23,7 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
     bytes32 private constant CRA_TYPEHASH = keccak256("Counter Party Risk Attestation(address VASPAddress, address originator, address beneficiary, string symbol, uint256 amount, uint256 expireAt)");
 
     constructor(address _signer) {
-        require(_signer != address(0), "CRO: Please use a non 0 address");
+        require(_signer != address(0), "CRA: Please use a non 0 address");
         signer = _signer;
         eip712DomainHash = keccak256(
             abi.encode(
@@ -39,16 +39,16 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
     // External Functions
 
     function verifyCounterpartyRisk(CRA memory _msg, bytes calldata _sig) external {
-        require(_msg.expireAt > block.timestamp, "CRO: Deadline expired");
-        require(_msg.VASPAddress == _msg.originator || _msg.VASPAddress == _msg.beneficiary, "CRO: Invalid customer VASP");
+        require(_msg.expireAt > block.timestamp, "CRA: Deadline expired");
+        require(_msg.VASPAddress == _msg.originator || _msg.VASPAddress == _msg.beneficiary, "CRA: Invalid customer VASP");
         address vasp;
         _msg.VASPAddress == _msg.originator ? vasp = _msg.originator : vasp = _msg.beneficiary;
-        require(vasp == msg.sender, "CRO: Invalid sender");
+        require(vasp == msg.sender, "CRA: Invalid sender");
         bytes32 hashedStruct = _getStructHash(_msg);
-        require(signatureOfHash[hashedStruct].length == 0, "CRO: Already verified by the customer VASP");    
+        require(signatureOfHash[hashedStruct].length == 0, "CRA: Already verified by the customer VASP");    
         (bytes32 r, bytes32 s, uint8 v) = _splitSignature(_sig);
         address signer_ = _verifyMessage(eip712DomainHash, hashedStruct, v, r, s);
-        require(signer_ == signer, "CRO: Invalid signature");
+        require(signer_ == signer, "CRA: Invalid signature");
         require(signer_ != address(0), "ECDSA: Invalid signature");  
 
         signatureOfHash[hashedStruct] = _sig;
@@ -57,7 +57,7 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
 
     // Setters
     function setSigner(address _signer) external onlyOwner {
-        require(_signer != address(0), "CRO: Please use a non 0 address");
+        require(_signer != address(0), "CRA: Please use a non 0 address");
         signer = _signer;
     }
 
@@ -78,7 +78,6 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
 
     function _getStructHash(CRA memory _msg) internal pure returns (bytes32) {
         return keccak256(abi.encode(
-            CRA_TYPEHASH,
             _msg.VASPAddress,
             _msg.originator,
             _msg.beneficiary,
@@ -90,7 +89,7 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
 
     function _verifyMessage(bytes32 _eip712DomainHash, bytes32 _hashedStruct, uint8 _v, bytes32 _r, bytes32 _s) internal pure returns (address) {
         //bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-        bytes memory prefix = "\x19\x01";
+        bytes memory prefix = "0x1901";
         bytes32 prefixedHashMessage = keccak256(abi.encodePacked(prefix, _eip712DomainHash, _hashedStruct));
         address signer_ = ecrecover(prefixedHashMessage, _v, _r, _s);
         return signer_;
@@ -105,7 +104,7 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
             uint8 v
         )
     {
-        require(sig.length == 65, "CRO: Invalid signature length");
+        require(sig.length == 65, "CRA: Invalid signature length");
 
         assembly {
             /*

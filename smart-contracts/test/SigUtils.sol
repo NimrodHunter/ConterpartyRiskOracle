@@ -30,7 +30,6 @@ contract SigUtils {
         return
             keccak256(
                 abi.encode(
-                    CRA_TYPEHASH,
                     _msg.VASPAddress,
                     _msg.originator,
                     _msg.beneficiary,
@@ -50,7 +49,7 @@ contract SigUtils {
         return
             keccak256(
                 abi.encodePacked(
-                    "\x19\x01",
+                    "0x1901",
                     DOMAIN_SEPARATOR,
                     getStructHash(_msg)
                 )

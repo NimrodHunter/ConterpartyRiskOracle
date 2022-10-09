@@ -19,8 +19,9 @@ contract CounterPartyRiskAttestationTest is Test {
     address internal beneficiary;
 
     function setUp() public {
-        signerPrivateKey = 0xA11CF;
+        signerPrivateKey = 0x05c17cd5268b54bb5cd896f7ec4e80ec5d9197aefa842d0b0ee75de92e162340;
         signer = vm.addr(signerPrivateKey);
+
 
         cra = new CounterPartyRiskAttestation(signer);
         sigUtils = new SigUtils(cra.getDomainHash());
@@ -38,7 +39,25 @@ contract CounterPartyRiskAttestationTest is Test {
 
     function testverifyCounterpartyRiskTo() public {
         
-       CounterPartyRiskAttestation.CRA memory craMsg = ICounterPartyRiskAttestation.CRA({
+       //CounterPartyRiskAttestation.CRA memory craMsg = ICounterPartyRiskAttestation.CRA({
+       //     VASPAddress: address(this),
+       //     originator: originator,
+       //     beneficiary: address(this),
+       //     symbol: "WETH",
+       //     amount: 2,
+       //     expireAt: 1 days
+        //});
+        
+        CounterPartyRiskAttestation.CRA memory craMsg = ICounterPartyRiskAttestation.CRA({
+            VASPAddress: 0x9A34E3D9908f17E62bC4dD1D21cf7cc04aa2DfAE,
+            originator: 0x6c3f84CCC710a9aF341A71BFCd66CB895aF384e5,
+            beneficiary: 0x9A34E3D9908f17E62bC4dD1D21cf7cc04aa2DfAE,
+            symbol: "ETH",
+            amount: 10000,
+            expireAt: 1666119768
+        });
+/*
+        SigUtils.CRA memory counterpartyRisk = SigUtils.CRA({
             VASPAddress: address(this),
             originator: originator,
             beneficiary: address(this),
@@ -47,13 +66,15 @@ contract CounterPartyRiskAttestationTest is Test {
             expireAt: 1 days
         });
 
+        */
+
         SigUtils.CRA memory counterpartyRisk = SigUtils.CRA({
-            VASPAddress: address(this),
-            originator: originator,
-            beneficiary: address(this),
-            symbol: "WETH",
-            amount: 2,
-            expireAt: 1 days
+            VASPAddress: 0x9A34E3D9908f17E62bC4dD1D21cf7cc04aa2DfAE,
+            originator: 0x6c3f84CCC710a9aF341A71BFCd66CB895aF384e5,
+            beneficiary: 0x9A34E3D9908f17E62bC4dD1D21cf7cc04aa2DfAE,
+            symbol: "ETH",
+            amount: 10000,
+            expireAt: 1666119768
         });
 
         bytes32 digest = sigUtils.getTypedDataHash(counterpartyRisk);
@@ -65,6 +86,8 @@ contract CounterPartyRiskAttestationTest is Test {
 
         assertEq(signature.length, 0);
 
+        vm.deal(0x9A34E3D9908f17E62bC4dD1D21cf7cc04aa2DfAE, 10000);
+        vm.prank(0x9A34E3D9908f17E62bC4dD1D21cf7cc04aa2DfAE);
         cra.verifyCounterpartyRisk(craMsg, sig);
         
         signature = cra.hashSignature(hashedMsg);
