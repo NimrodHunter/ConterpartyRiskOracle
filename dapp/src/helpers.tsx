@@ -5,7 +5,6 @@ type Provider = SafeEventEmitterProvider | null;
 
 export const getChainId = async (provider: Provider) => {
 	if (!provider) {
-		console.log("provider not initialized yet");
 		return;
 	}
 	const rpc = new RPC(provider);
@@ -14,7 +13,6 @@ export const getChainId = async (provider: Provider) => {
 };
 export const getAccounts = async (provider: Provider) => {
 	if (!provider) {
-		console.log("provider not initialized yet");
 		return;
 	}
 	const rpc = new RPC(provider);
@@ -24,43 +22,35 @@ export const getAccounts = async (provider: Provider) => {
 
 export const getBalance = async (provider: Provider) => {
 	if (!provider) {
-		console.log("provider not initialized yet");
 		return;
 	}
 	const rpc = new RPC(provider);
 
-	const balance = await rpc.getBalance();
-	console.log(balance);
+	return await rpc.getBalance();
 };
 
 export const sendTransaction = async (provider: Provider) => {
 	if (!provider) {
-		console.log("provider not initialized yet");
 		return;
 	}
 	const rpc = new RPC(provider);
-	const receipt = await rpc.sendTransaction();
-	console.log(receipt);
+	return await rpc.sendTransaction();
 };
 
 export const signMessage = async (provider: Provider) => {
 	if (!provider) {
-		console.log("provider not initialized yet");
 		return;
 	}
 	const rpc = new RPC(provider);
-	const signedMessage = await rpc.signMessage();
-	console.log(signedMessage);
+	return await rpc.signMessage();
 };
 
 export const getPrivateKey = async (provider: Provider) => {
 	if (!provider) {
-		console.log("provider not initialized yet");
 		return;
 	}
 	const rpc = new RPC(provider);
-	const privateKey = await rpc.getPrivateKey();
-	console.log(privateKey);
+	return await rpc.getPrivateKey();
 };
 
 export const sleep = (ms: number) =>

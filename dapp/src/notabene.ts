@@ -18,8 +18,6 @@ interface RuleResponse {
 }
 
 export const runRules = async (tx: Tx): Promise<RuleResponse> => {
-	console.log(tx);
-
 	const res = await fetch("http://localhost:3000/rules/run", {
 		method: "post",
 		body: JSON.stringify(tx),

@@ -14,6 +14,7 @@ import Header from "./components/Header";
 import { runRules } from "./notabene";
 import { getAccounts, sleep } from "./helpers";
 import { formatEther } from "ethers/lib/utils";
+import { blockchains } from "./blockchains";
 
 const clientId =
 	"BHzLV_G8M2v-usQhJfTTKcDBR7RENAkYLn9D2VqX14Fn2_s2iSdjLFItKs5-BMOjtzwCilHGdcFTkqz2A6TRP_I"; // get from https://dashboard.web3auth.io
@@ -31,9 +32,12 @@ function App() {
 	const [processingText, setProcessingText] = useState<string | undefined>(
 		undefined
 	);
+	const [blockchain, setBlockchain] = useState(0);
 	const toast = useToast();
 
 	useEffect(() => {
+		console.log("refreshing, blockchain: ", blockchain);
+
 		if (provider) {
 			refresh();
 		}
@@ -42,19 +46,18 @@ function App() {
 
 	useEffect(() => {
 		const init = async () => {
+			const { chainId, rpcTarget, name, blockchainExplorer, ticker } =
+				blockchains[blockchain];
 			try {
 				const web3auth = new Web3Auth({
 					clientId,
 					chainConfig: {
 						chainNamespace: CHAIN_NAMESPACES.EIP155,
-						chainId: "0x5",
-						rpcTarget:
-							"https://eth-goerli.g.alchemy.com/v2/6vw3KrCK7MCw53KabFy2YWABLN3MEhGl",
-						// Avoid using public rpcTarget in production.
-						// Use services like Infura, Quicknode etc
-						displayName: "Ethereum Goerli",
-						blockExplorer: "https://goerli.etherscan.io",
-						ticker: "ETH",
+						chainId: chainId,
+						rpcTarget: rpcTarget,
+						displayName: name,
+						blockExplorer: blockchainExplorer,
+						ticker: ticker,
 						tickerName: "Ethereum",
 					},
 				});
@@ -71,7 +74,7 @@ function App() {
 		};
 
 		init();
-	}, []);
+	}, [blockchain]);
 
 	const login = async () => {
 		if (!web3auth) {
@@ -175,8 +178,19 @@ function App() {
 				direction: "outgoing",
 			});
 
-			if ((rulesResult as any).actionRule === "REJECT") {
-				alert("cannot stake");
+			if ((rulesResult as any).actionRule === "APPROVE") {
+				toast({
+					title: "Failed to comply",
+					description: "You cannot stake",
+					status: "error",
+					duration: 3000,
+					isClosable: true,
+					position: "top",
+					containerStyle: {
+						marginTop: "80px",
+					},
+				});
+				resetLoading();
 				return;
 			}
 
@@ -337,8 +351,6 @@ function App() {
 
 		const rewardsToBeClaimed = await getRewardsToBeClaimed();
 
-		console.log("rewardsToBeClaimed", rewardsToBeClaimed.toString());
-
 		const rulesResult = await runRules({
 			vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
 			originatorAddress: stakingContract.address,
@@ -382,11 +394,13 @@ function App() {
 		refresh();
 	};
 
-	console.log(processingText, isLoading);
-
 	const loggedInView = (
 		<>
-			<Header address={address} onLogout={logout} />
+			<Header
+				setBlockchain={setBlockchain}
+				address={address}
+				onLogout={logout}
+			/>
 			<Box height="150px" />
 			<StakeView
 				isLoading={isLoading}
@@ -398,25 +412,6 @@ function App() {
 				onUnStake={unstake}
 				onGetRewards={getreward}
 			/>
-			{/* {isLoading && processingText && (
-				<Modal isCentered onClose={() => {}} isOpen={!!isLoading}>
-					<ModalOverlay />
-					<ModalContent>
-						<ModalBody>
-							<Box display="flex" justifyContent="center" alignItems="center">
-								{(isLoading === "staking" || isLoading === "unstaking") && (
-									<Spinner />
-								)}
-								{isLoading === "success" && (
-									<CheckCircleIcon color="green.500" />
-								)}
-								{isLoading === "error" && <WarningIcon color="red.500" />}
-							</Box>
-							<Text>{processingText}</Text>
-						</ModalBody>
-					</ModalContent>
-				</Modal>
-			)} */}
 		</>
 	);
 

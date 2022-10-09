@@ -1,11 +1,13 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
 
 export default function Header({
 	address = "",
 	onLogout,
+	setBlockchain,
 }: {
 	address?: string | null;
 	onLogout: () => void;
+	setBlockchain: (index: number) => void;
 }) {
 	return (
 		<Box
@@ -15,6 +17,17 @@ export default function Header({
 			width="98%"
 			margin="8px 20px"
 		>
+			<Tabs
+				onChange={setBlockchain}
+				variant="soft-rounded"
+				size="sm"
+				colorScheme="green"
+			>
+				<TabList>
+					<Tab>Goerli</Tab>
+					<Tab>Mumbai</Tab>
+				</TabList>
+			</Tabs>
 			<Text
 				marginRight="8px"
 				fontSize="smaller"
