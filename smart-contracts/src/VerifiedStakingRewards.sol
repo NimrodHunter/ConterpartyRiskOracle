@@ -66,6 +66,10 @@ contract VerifiedStakingRewards {
         return _min(finishAt, block.timestamp);
     }
 
+    function getCRA() public view returns (address) {
+        return address(cra);
+    }
+
     function rewardPerToken() public view returns (uint) {
         if (totalSupply == 0) {
             return rewardPerTokenStored;

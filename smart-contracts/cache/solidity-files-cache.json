@@ -601,8 +601,8 @@
       }
     },
     "src/CounterPartyRiskAttestation.sol": {
-      "lastModificationDate": 1665282318791,
-      "contentHash": "f077a24e54389948e177dd7e55ab70d1",
+      "lastModificationDate": 1665286453011,
+      "contentHash": "832d9ebfac65317fb2fb925f55181d82",
       "sourceName": "src/CounterPartyRiskAttestation.sol",
       "solcConfig": {
         "settings": {
@@ -770,8 +770,8 @@
       }
     },
     "src/VerifiedStakingRewards.sol": {
-      "lastModificationDate": 1665280265094,
-      "contentHash": "6ee47540c4462d46342c7036ecf713f8",
+      "lastModificationDate": 1665285818689,
+      "contentHash": "1f5c0a878adcd7c744bf0fa4339adb75",
       "sourceName": "src/VerifiedStakingRewards.sol",
       "solcConfig": {
         "settings": {

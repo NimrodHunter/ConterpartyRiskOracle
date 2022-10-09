@@ -42,8 +42,10 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
         eip712DomainHash = _hash(EIP712Domain({
             name: "Counter Party Risk Attestation",
             version: '1',
-            chainId: block.chainid,
-            verifyingContract: address(this)
+            // block.chainid
+            chainId: 1,
+            //address(this)
+            verifyingContract: 0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC
         }));
     }
     
@@ -54,13 +56,13 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
         require(_msg.VASPAddress == _msg.originator || _msg.VASPAddress == _msg.beneficiary, "CRA: Invalid customer VASP");
         address vasp;
         _msg.VASPAddress == _msg.originator ? vasp = _msg.originator : vasp = _msg.beneficiary;
-        require(vasp == msg.sender, "CRA: Invalid sender");
-        bytes32 hashedStruct = _getStructHash(_msg);
+        //require(vasp == msg.sender, "CRA: Invalid sender");
+        bytes32 hashedStruct = getStructHash(_msg);
         require(signatureOfHash[hashedStruct].length == 0, "CRA: Already verified by the customer VASP");    
         (bytes32 r, bytes32 s, uint8 v) = _splitSignature(_sig);
         address signer_ = _verifyMessage(eip712DomainHash, hashedStruct, v, r, s);
         require(signer_ == signer, "CRA: Invalid signature");
-        require(signer_ != address(0), "ECDSA: Invalid signature");  
+        //require(signer_ != address(0), "ECDSA: Invalid signature");  
 
         signatureOfHash[hashedStruct] = _sig;
         emit CounterpartyRiskAttestation(_msg.VASPAddress, _msg.originator, _msg.beneficiary, _msg.symbol, _msg.amount);
@@ -97,7 +99,7 @@ contract CounterPartyRiskAttestation is ICounterPartyRiskAttestation, Ownable {
         ));
     }
 
-    function _getStructHash(CRA memory _msg) internal pure returns (bytes32) {
+    function getStructHash(CRA memory _msg) public pure returns (bytes32) {
         return keccak256(abi.encode(
             CRA_TYPEHASH,
             _msg.VASPAddress,
