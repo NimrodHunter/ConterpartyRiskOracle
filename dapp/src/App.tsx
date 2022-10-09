@@ -5,7 +5,7 @@ import "./App.css";
 // import RPC from "./web3RPC"; // for using web3.js
 // import RPC from "./ethersRPC"; // for using ethers.js
 import { BigNumber, ethers } from "ethers";
-import { WETHContract } from "./contracts/wethContract";
+import { wrappedAssetContract } from "./contracts/wrappedAssetContract";
 import { musdContract } from "./contracts/musdContract";
 import { stakingContract } from "./contracts/stakingContract";
 import StakeView from "./views/StakeView";
@@ -35,9 +35,11 @@ function App() {
 	const [blockchain, setBlockchain] = useState(0);
 	const toast = useToast();
 
+	const currentChain = blockchains[blockchain];
+	const currentStakingContractAddress = stakingContract.addresses[blockchain];
+	const currentWrappedAssetContractAddress =
+		wrappedAssetContract.addresses[blockchain];
 	useEffect(() => {
-		console.log("refreshing, blockchain: ", blockchain);
-
 		if (provider) {
 			refresh();
 		}
@@ -46,8 +48,14 @@ function App() {
 
 	useEffect(() => {
 		const init = async () => {
-			const { chainId, rpcTarget, name, blockchainExplorer, ticker } =
-				blockchains[blockchain];
+			const {
+				chainId,
+				rpcTarget,
+				name,
+				blockchainExplorer,
+				ticker,
+				tickerName,
+			} = blockchains[blockchain];
 			try {
 				const web3auth = new Web3Auth({
 					clientId,
@@ -58,7 +66,7 @@ function App() {
 						displayName: name,
 						blockExplorer: blockchainExplorer,
 						ticker: ticker,
-						tickerName: "Ethereum",
+						tickerName: tickerName,
 					},
 				});
 
@@ -66,6 +74,13 @@ function App() {
 
 				await web3auth.initModal();
 				if (web3auth.provider) {
+					toast({
+						title: "Connected",
+						description: "You are connected to " + blockchains[blockchain].name,
+						status: "success",
+						duration: 3000,
+						isClosable: true,
+					});
 					setProvider(web3auth.provider);
 				}
 			} catch (error) {
@@ -96,17 +111,21 @@ function App() {
 
 	const refresh = async () => {
 		const fetchedAddress = await getAccounts(provider);
-		const weth = await wrappedETHBalance();
+		const wrappedAsset = await wrappedAssetBalance();
 		const staked = await stakedBalance();
-		const musd = await mUSDBalance();
+
+		console.log("wrappedAsset", wrappedAsset);
+		console.log("staked", staked);
+
+		// const musd = await mUSDBalance();
 		// const reward = await rewardsBalance()
 		setAddress(fetchedAddress);
-		setWethBalance(weth);
+		setWethBalance(wrappedAsset);
 		setAmountStaked(staked);
-		setMusdBalance(musd);
+		// setMusdBalance(musd);
 	};
 
-	const wrappedETHBalance = async () => {
+	const wrappedAssetBalance = async () => {
 		if (!provider) {
 			return;
 		}
@@ -114,8 +133,8 @@ function App() {
 		const signer = ethersProvider.getSigner();
 
 		const contract = new ethers.Contract(
-			WETHContract.address,
-			WETHContract.abi,
+			currentWrappedAssetContractAddress,
+			wrappedAssetContract.abi,
 			signer
 		);
 		const address = await signer.getAddress();
@@ -149,7 +168,7 @@ function App() {
 		const signer = ethersProvider.getSigner();
 
 		const contract = new ethers.Contract(
-			stakingContract.address,
+			currentStakingContractAddress,
 			stakingContract.abi,
 			signer
 		);
@@ -172,13 +191,13 @@ function App() {
 			const rulesResult = await runRules({
 				vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
 				originatorAddress: address as string,
-				beneficiaryAddress: stakingContract.address,
-				transactionAsset: "WETH",
+				beneficiaryAddress: currentStakingContractAddress,
+				transactionAsset: currentChain.stakingToken,
 				transactionAmount: amount,
 				direction: "outgoing",
 			});
 
-			if ((rulesResult as any).actionRule === "APPROVE") {
+			if ((rulesResult as any).actionRule === "REJECT") {
 				toast({
 					title: "Failed to comply",
 					description: "You cannot stake",
@@ -201,17 +220,17 @@ function App() {
 			const ethersProvider = new ethers.providers.Web3Provider(provider);
 			const signer = ethersProvider.getSigner();
 			const wethContractCurrent = new ethers.Contract(
-				WETHContract.address,
-				WETHContract.abi,
+				currentWrappedAssetContractAddress,
+				wrappedAssetContract.abi,
 				signer
 			);
 			const stakingContractCurrent = new ethers.Contract(
-				stakingContract.address,
+				currentStakingContractAddress,
 				stakingContract.abi,
 				signer
 			);
 			const tx = await wethContractCurrent.approve(
-				stakingContract.address,
+				currentStakingContractAddress,
 				amount
 			);
 
@@ -263,9 +282,9 @@ function App() {
 
 		const rulesResult = await runRules({
 			vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
-			originatorAddress: stakingContract.address,
+			originatorAddress: currentStakingContractAddress,
 			beneficiaryAddress: address as string,
-			transactionAsset: "WETH",
+			transactionAsset: currentChain.stakingToken,
 			transactionAmount: amount,
 			direction: "incoming",
 		});
@@ -292,7 +311,7 @@ function App() {
 		const ethersProvider = new ethers.providers.Web3Provider(provider);
 		const signer = ethersProvider.getSigner();
 		const stakingContractCurrent = new ethers.Contract(
-			stakingContract.address,
+			currentStakingContractAddress,
 			stakingContract.abi,
 			signer
 		);
@@ -304,7 +323,10 @@ function App() {
 
 		showModal(
 			"success",
-			"UnStaked: " + formatEther(BigNumber.from(amount)) + " WETH"
+			"UnStaked: " +
+				formatEther(BigNumber.from(amount)) +
+				" " +
+				currentChain.stakingToken
 		);
 		toast({
 			title: `Un-Staked ${formatEther(
@@ -337,7 +359,7 @@ function App() {
 		const ethersProvider = new ethers.providers.Web3Provider(provider);
 		const signer = ethersProvider.getSigner();
 		const stakingContractCurrent = new ethers.Contract(
-			stakingContract.address,
+			currentStakingContractAddress,
 			stakingContract.abi,
 			signer
 		);
@@ -353,7 +375,7 @@ function App() {
 
 		const rulesResult = await runRules({
 			vaspDID: "did:ethr:0xcea876c94528c8d790836ad7e9420ba8253fdf70",
-			originatorAddress: stakingContract.address,
+			originatorAddress: currentStakingContractAddress,
 			beneficiaryAddress: address as string,
 			transactionAsset: "MUSD",
 			transactionAmount: rewardsToBeClaimed.toString(),
@@ -383,7 +405,7 @@ function App() {
 		const ethersProvider = new ethers.providers.Web3Provider(provider);
 		const signer = ethersProvider.getSigner();
 		const stakingContractCurrent = new ethers.Contract(
-			stakingContract.address,
+			currentStakingContractAddress,
 			stakingContract.abi,
 			signer
 		);
@@ -400,9 +422,11 @@ function App() {
 				setBlockchain={setBlockchain}
 				address={address}
 				onLogout={logout}
+				blockchain={blockchain}
 			/>
 			<Box height="150px" />
 			<StakeView
+				chain={blockchains[blockchain]}
 				isLoading={isLoading}
 				amountStaked={amountStaked}
 				wethBalance={wethBalance}

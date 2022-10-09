@@ -48,7 +48,6 @@ export default function Amount({
 						border="none"
 						type="number"
 						onChange={handleChange}
-						defaultValue={formatEther(BigNumber.from(0)).toString()}
 						value={displayValue}
 					/>
 					<Text fontSize="2md" fontWeight="bold" textAlign="right">

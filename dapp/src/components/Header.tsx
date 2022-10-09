@@ -1,12 +1,14 @@
-import { Box, Button, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
+import { Box, Button, Image, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
 
 export default function Header({
 	address = "",
 	onLogout,
+	blockchain,
 	setBlockchain,
 }: {
 	address?: string | null;
 	onLogout: () => void;
+	blockchain: number;
 	setBlockchain: (index: number) => void;
 }) {
 	return (
@@ -21,11 +23,30 @@ export default function Header({
 				onChange={setBlockchain}
 				variant="soft-rounded"
 				size="sm"
-				colorScheme="green"
+				margin="0 8px"
+				colorScheme={blockchain === 0 ? "blue" : "purple"}
 			>
 				<TabList>
-					<Tab>Goerli</Tab>
-					<Tab>Mumbai</Tab>
+					<Tab>
+						<Image
+							marginRight="8px"
+							borderRadius="full"
+							src="https://chainlist.org/_next/image?url=https%3A%2F%2Fdefillama.com%2Fchain-icons%2Frsz_ethereum.jpg&w=64&q=75"
+							width="20px"
+							height="20px"
+						/>
+						Goerli
+					</Tab>
+					<Tab>
+						<Image
+							marginRight="8px"
+							borderRadius="full"
+							src="https://chainlist.org/_next/image?url=https%3A%2F%2Fdefillama.com%2Fchain-icons%2Frsz_polygon.jpg&w=64&q=75"
+							width="20px"
+							height="20px"
+						/>
+						Mumbai
+					</Tab>
 				</TabList>
 			</Tabs>
 			<Text

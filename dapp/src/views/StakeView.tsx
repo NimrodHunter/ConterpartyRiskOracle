@@ -11,6 +11,7 @@ export default function StakeView({
 	isLoading,
 	amountStaked,
 	musdBalance,
+	chain,
 }: {
 	onStake: (amount: string) => void;
 	onUnStake: (amount: string) => void;
@@ -20,6 +21,7 @@ export default function StakeView({
 	musdBalance?: string;
 	isLoading?: undefined | string;
 	processingText?: string;
+	chain: any;
 }) {
 	const [amount, setAmount] = React.useState("0");
 	const [state, setState] = React.useState(0);
@@ -30,10 +32,12 @@ export default function StakeView({
 
 	const handleStake = () => {
 		onStake(amount);
+		setAmount("0");
 	};
 
 	const handleUnStake = () => {
 		onUnStake(amount);
+		setAmount("0");
 	};
 
 	const shouldDisableButtons = amount === "0";
@@ -68,7 +72,11 @@ export default function StakeView({
 						<Tab>UNSTAKE</Tab>
 					</TabList>
 				</Tabs>
-				<Amount max={currentMax} onChange={handleAmount} />
+				<Amount
+					symbol={chain.ticker}
+					max={currentMax}
+					onChange={handleAmount}
+				/>
 				{state === 0 ? (
 					<Button
 						isLoading={isLoading === "staking"}
@@ -88,22 +96,6 @@ export default function StakeView({
 						UNSTAKE
 					</Button>
 				)}
-				{/* {isLoading && (
-					<>
-						<Box display="flex" justifyContent="center" alignItems="center">
-							{isLoading === "success" && <CheckCircleIcon color="green.500" />}
-							{isLoading === "error" && <WarningIcon color="red.500" />}
-						</Box>
-						<Text>{processingText}</Text>
-					</>
-				)} */}
-				{/* <Button
-					isLoading={isLoading === "getreward"}
-					isDisabled={!!isLoading}
-					onClick={onGetRewards}
-				>
-					GET REWARDS
-				</Button> */}
 			</Container>
 		</>
 	);
