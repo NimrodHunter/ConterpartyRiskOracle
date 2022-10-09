@@ -16,6 +16,6 @@ CounterPartyRiskAttestation Contract provide the possibility to verified [eip712
 
 ### Polygon Mumbai
 
-- VerifiedStakingRewards.sol: [0x1F2679129E64aCC7523aE675e9ecd4058223f854](https://mumbai.polygonscan.com/address/0x1F2679129E64aCC7523aE675e9ecd4058223f854)
+- VerifiedStakingRewards.sol: [0xd47Ba649709763079FCF457b459b27cA98Ca6B0F](https://mumbai.polygonscan.com/address/0xd47Ba649709763079FCF457b459b27cA98Ca6B0F)
 
 - CounterPartyRiskAttestation.sol: [0x9BC97CABE1FD9b697070558401B184ffbA862899](https://mumbai.polygonscan.com/address/0x9bc97cabe1fd9b697070558401b184ffba862899)

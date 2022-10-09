@@ -770,8 +770,8 @@
       }
     },
     "src/VerifiedStakingRewards.sol": {
-      "lastModificationDate": 1665297844828,
-      "contentHash": "3483e24100a1899d8389dbd299c2f3fe",
+      "lastModificationDate": 1665303216655,
+      "contentHash": "f1d1b0c11fa2e5931273bc9a1c99b03e",
       "sourceName": "src/VerifiedStakingRewards.sol",
       "solcConfig": {
         "settings": {

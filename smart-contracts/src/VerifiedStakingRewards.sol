@@ -89,7 +89,7 @@ contract VerifiedStakingRewards {
             VASPAddress: address(this),
             originator: msg.sender,
             beneficiary: address(this),
-            symbol: "WETH",
+            symbol: block.chainid == 5 ? "WETH" : "WMATIC",
             amount: _amount,
             expireAt: _params.expireAt
         });
