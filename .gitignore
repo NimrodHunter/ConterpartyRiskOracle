@@ -1,1 +1,3 @@
 eip712-example/node_modules
+.env
+.gitmodules
