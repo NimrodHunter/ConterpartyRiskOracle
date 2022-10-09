@@ -1,7 +1,7 @@
 import abi from "./stakingContractAbi.json";
 
 export const stakingContractAddress =
-	"0xd4E7de29479c2b1376E98de51E081f0AF1a1Bd7f";
+	"0x04ef31314b9683f0786fB957697e18D16Fb7D6E9";
 
 export const stakingContract = {
 	address: stakingContractAddress,

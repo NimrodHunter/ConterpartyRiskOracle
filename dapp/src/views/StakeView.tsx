@@ -1,22 +1,28 @@
-import { Box, Button, Container, Text } from "@chakra-ui/react";
-import { BigNumber } from "ethers";
+import { Button, Container, Tab, TabList, Tabs } from "@chakra-ui/react";
 import React from "react";
 import Amount from "../components/Amount";
 
 export default function StakeView({
 	onStake,
+	onUnStake,
+	onGetRewards,
+	processingText,
 	wethBalance,
 	isLoading,
-	amountStoked,
+	amountStaked,
+	musdBalance,
 }: {
 	onStake: (amount: string) => void;
+	onUnStake: (amount: string) => void;
+	onGetRewards: () => void;
 	wethBalance?: string;
-	amountStoked?: string;
+	amountStaked?: string;
+	musdBalance?: string;
 	isLoading?: undefined | string;
+	processingText?: string;
 }) {
 	const [amount, setAmount] = React.useState("0");
-
-	console.log(isLoading, "isLoading");
+	const [state, setState] = React.useState(0);
 
 	const handleAmount = (val: string) => {
 		setAmount(val);
@@ -26,7 +32,20 @@ export default function StakeView({
 		onStake(amount);
 	};
 
+	const handleUnStake = () => {
+		onUnStake(amount);
+	};
+
 	const shouldDisableButtons = amount === "0";
+	const currentMax = state === 0 ? wethBalance : amountStaked;
+
+	const handleTabChange = (index: number) => {
+		setState(index);
+		if (!currentMax) return;
+		if (Number(amount) > Number(currentMax)) {
+			setAmount(currentMax);
+		}
+	};
 
 	return (
 		<>
@@ -38,31 +57,53 @@ export default function StakeView({
 				padding="8px"
 				borderRadius="16px"
 			>
-				<Text fontSize="2sm" fontWeight="bold" textAlign="center">
-					Stake
-				</Text>
-				<Amount max={wethBalance} onChange={handleAmount} />
-				<Button
-					isLoading={isLoading === "staking"}
-					isDisabled={shouldDisableButtons}
-					onClick={handleStake}
+				<Tabs
+					onChange={handleTabChange}
+					variant="soft-rounded"
+					size="sm"
+					colorScheme="green"
 				>
-					STAKE
-				</Button>
-				<Button
-					isLoading={isLoading === "unstaking"}
-					isDisabled={shouldDisableButtons}
-					onClick={() => {}}
-				>
-					UNSTAKE
-				</Button>
-				<Button
+					<TabList>
+						<Tab>STAKE</Tab>
+						<Tab>UNSTAKE</Tab>
+					</TabList>
+				</Tabs>
+				<Amount max={currentMax} onChange={handleAmount} />
+				{state === 0 ? (
+					<Button
+						isLoading={isLoading === "staking"}
+						isDisabled={shouldDisableButtons || !!isLoading}
+						loadingText={processingText}
+						onClick={handleStake}
+					>
+						STAKE
+					</Button>
+				) : (
+					<Button
+						isLoading={isLoading === "unstaking"}
+						isDisabled={shouldDisableButtons || !!isLoading}
+						loadingText={processingText}
+						onClick={handleUnStake}
+					>
+						UNSTAKE
+					</Button>
+				)}
+				{/* {isLoading && (
+					<>
+						<Box display="flex" justifyContent="center" alignItems="center">
+							{isLoading === "success" && <CheckCircleIcon color="green.500" />}
+							{isLoading === "error" && <WarningIcon color="red.500" />}
+						</Box>
+						<Text>{processingText}</Text>
+					</>
+				)} */}
+				{/* <Button
 					isLoading={isLoading === "getreward"}
-					isDisabled={shouldDisableButtons}
-					onClick={() => {}}
+					isDisabled={!!isLoading}
+					onClick={onGetRewards}
 				>
 					GET REWARDS
-				</Button>
+				</Button> */}
 			</Container>
 		</>
 	);

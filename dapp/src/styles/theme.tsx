@@ -19,10 +19,28 @@ export const theme = extendTheme({
 			baseStyle: {
 				borderRadius: "16px",
 				padding: "8px",
-				border: "none",
+				border: "none !important",
+				boxShadow: "none !important",
 				_focus: {
 					outline: "none",
+					border: "none",
+					boxShadow: "none",
 				},
+				_active: {
+					outline: "none",
+					border: "none",
+					boxShadow: "none",
+				},
+				_focus_visible: {
+					outline: "none",
+					border: "none !important",
+					boxShadow: "none !important",
+				},
+			},
+			defaultProps: {
+				focusBorderColor: "none",
+				borderColor: "none",
+				boxShadow: "none",
 			},
 		},
 		Button: {

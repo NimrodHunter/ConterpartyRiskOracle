@@ -34,10 +34,8 @@ export default function Amount({
 
 	return (
 		<>
-			<Text fontSize="2md" paddingLeft="8px" justifyContent="flex-start">
-				Balance
-			</Text>
 			<Container
+				marginTop="8px"
 				borderColor="transparent"
 				backgroundColor="gray.200"
 				padding="8px"

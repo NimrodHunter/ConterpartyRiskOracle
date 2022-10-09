@@ -12,8 +12,7 @@ export default function Header({
 			display="flex"
 			justifyContent="flex-end"
 			alignContent="center"
-			width="100%"
-			maxWidth="800px"
+			width="98%"
 			margin="8px 20px"
 		>
 			<Text
